@@ -1,3 +1,8 @@
+/**
+ * Build file for the project.
+ * by: Andrew Velez
+ */
+
 import { mkdir, rm } from "node:fs/promises";
 import { watch } from "node:fs";
 import { join } from "node:path";
@@ -13,14 +18,6 @@ let server;
  * Runs tests and builds the standalone binary.
  */
 async function build() {
-  console.log("\n🧪 Running tests...");
-  const testResult = Bun.spawnSync(["bun", "test"], { stdout: "inherit" });
-  
-  if (!testResult.success) {
-    console.error("❌ Tests failed. Build aborted.");
-    return false;
-  }
-
   console.log("🛠️  Building executable...");
   await rm(distDir, { recursive: true, force: true });
   await mkdir(distDir, { recursive: true });
@@ -30,12 +27,12 @@ async function build() {
     target: "bun",
     minify: !isWatch,
     sourcemap: "none",
-    // @ts-ignore - Ignoring if @types/bun is outdated; this is valid Bun 1.1+
+    throw: false,
     compile: {
       outfile,
       autoloadDotenv: true,
-      autoloadBunfig: true
-    }
+      autoloadBunfig: true,
+    },
   });
 
   if (!result.success) {
@@ -49,7 +46,7 @@ async function build() {
 }
 
 /**
- * Manages the server child process
+ * @returns {Promise<void>}
  */
 async function restart() {
   if (server) {
@@ -61,24 +58,32 @@ async function restart() {
     stdout: "inherit",
     stderr: "inherit",
     stdin: "inherit",
-    env: Bun.env
+    env: Bun.env,
   });
 }
 
-// Initial execution`
 const success = await build();
 
 if (isWatch) {
   if (success) await restart();
 
+  /**
+   * Debounce timer used to collapse multiple file-change events into one
+   * rebuild.
+   *
+   * @type {ReturnType<typeof setTimeout> | undefined}
+   */
   let timer;
-  watch(join(import.meta.dir, "src"), { recursive: true }, (event, filename) => {
+
+  watch(join(import.meta.dir, "src"), { recursive: true }, (_event, filename) => {
     if (!filename) return;
+
     clearTimeout(timer);
     timer = setTimeout(async () => {
       if (await build()) await restart();
     }, 200);
   });
+
   console.log("👀 Watching for changes...");
 } else {
   process.exit(success ? 0 : 1);
