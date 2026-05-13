@@ -1,0 +1,18 @@
+LLM general instructions
+Please be concise, double check your answer, and speak in an informal regular conversation style, no summaries, bulleted points, or overly verbose answers.  Always prefer short, pragmatic answers.
+
+Link app description for LLMs
+
+LinkUp is a gay dating/social app meant to feel immediately different from Grindr-style apps: free core experience, less paywall hostility, more real connection, and monetization through ancillary commerce, sponsorships, ads, events, and partnerships rather than restricting basic dating functionality.
+
+Architecturally, LinkUp should be client-heavy and server-light, not purely serverless for ideology’s sake. Servers or home authorities still handle identity, permissions, profile visibility, blocks, reports, abuse controls, exact-location protection, capability issuance, paid feature state, durable reconciliation, and fallback. Clients should do as much as practical, especially local computation, caching, profile rendering, and authorized peer communication.
+
+Location is the core primitive. LinkUp uses density-adaptive geocells: social proximity units, not fixed map tiles. A geocell should approximate the people who feel immediately nearby, like the first page of a Grindr-style grid. Dense areas get smaller geocells; rural areas get larger ones. Discovery expands from current geocell to adjacent geocells to neighborhood to city to metro.
+
+Locality-centered design applies everywhere: discovery, rendezvous, caching, replicated storage, bandwidth sharing, abuse detection, routing hints, backup placement, and recovery. The storage rule is “global addressability, local availability.”
+
+Data is split into public, private, and internal. Public means user-approved/shareable subject to audience rules, not globally visible. Private means user-owned data the app may use but should not expose to other users. Internal means operational/system state. Internal data splits into static reference data like geodata and dynamic operational state like rendezvous, logs, moderation queues, replication cursors, and reconciliation state.
+
+For storage, LinkUp may use an IPFS-like content-addressed replicated layer, but locality-aware rather than global-uniform. Static internal data is ideal for signed manifests and content hashes. Dynamic data should use append-only logs, signed checkpoints, replicated backups, and authoritative reconciliation. Nodes may carry/cache/relay/restore data, but they do not define truth.
+
+For transport, WebRTC/RTCDataChannel is the practical peer transport for authorized app data/media, with signaling over WebSocket/HTTPS/XMPP/Matrix as needed. TURN-only relay can be used for privacy-sensitive modes. WebRTC should not be used as unrestricted broadcast. Peer-floated state should use signed, scoped, expiring, audience-encrypted envelopes/capabilities and append-only signed events. Truth comes from signatures, capabilities, expiry, audience encryption, and reconciliation.

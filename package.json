@@ -1,15 +1,18 @@
 {
-  "name": "project-link-up",
+  "name": "bun-htmx-starter",
   "type": "module",
   "private": true,
+  "scripts": {
+    "dev": "bun build.js --watch",
+    "build": "bun build.js",
+    "test": "bun test",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "htmx.org": "^2.0.0"
+  },
   "devDependencies": {
     "@types/bun": "latest",
-    "jsdoc": "^4.0.5",
-    "typescript": "^6.0.3"
-  },
-  "scripts": {
-    "typecheck": "tsc --noEmit",
-    "test": "bun test",
-    "start": "bun run index.mjs"
+    "typescript": "latest"
   }
 }

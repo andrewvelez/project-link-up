@@ -1,0 +1,33 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color-scheme: light dark;
+}
+
+body {
+  margin: 0;
+  padding: 2rem;
+}
+
+main {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+input {
+  flex: 1;
+}
+
+input,
+button {
+  font: inherit;
+  padding: 0.5rem 0.75rem;
+}
+
+li {
+  margin-block: 0.5rem;
+}

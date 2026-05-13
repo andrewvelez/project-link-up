@@ -1,0 +1,9 @@
+<!-- Used for the initial load and HTMX updates -->
+{{#if todos}}
+  {{#each todos}}
+    <li style="margin-bottom: 0.5rem;">{{text}}</li>
+  {{/each}}
+{{/if}}
+{{#unless todos}}
+  <li class="empty-state"><em>No todos yet.</em></li>
+{{/unless}}

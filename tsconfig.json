@@ -1,19 +1,18 @@
 {
   "compilerOptions": {
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "target": "ESNext",
     "module": "Preserve",
     "moduleDetection": "force",
+    "moduleResolution": "bundler",
     "allowJs": true,
     "checkJs": true,
-    "types": ["bun"],
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
     "noEmit": true,
+    "strict": true,
+    "types": ["bun"],
+    "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
+    "noUncheckedIndexedAccess": true
   },
-  "include": ["src/**/*.js", "test/**/*.js", "*.js", "*.mjs"]
+  "include": ["src/**/*.js", "test/**/*.js", "build.js"]
 }
