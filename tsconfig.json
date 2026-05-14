@@ -12,7 +12,8 @@
     "types": ["bun"],
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "noImplicitAny": false
   },
   "include": ["src/**/*.js", "test/**/*.js", "build.js"]
 }

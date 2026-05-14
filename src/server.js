@@ -1,16 +1,25 @@
+/**
+ * Server process to start the frontend app.
+ * by: Andrew Velez
+ */
+
 import { createHandler } from "./app.js";
-import { join, dirname } from "node:path";
+import { dirname, join } from "node:path";
+import { pathToFileURL } from "node:url";
 
 const port = Number(Bun.env.PORT ?? 3000);
 
-// Detect if running from a compiled binary or source
-const isCompiled = Bun.main.endsWith("/app"); 
-const baseDir = isCompiled ? dirname(process.execPath) : import.meta.dir;
-const publicDir = new URL(`file://${join(baseDir, "public")}/`);
+const isCompiled = Bun.main.endsWith("/app");
+
+const publicPath = isCompiled
+  ? join(dirname(process.execPath), "public")
+  : join(import.meta.dir, "..", "public");
+
+const publicDir = pathToFileURL(`${publicPath}/`);
 
 Bun.serve({
   port,
   fetch: createHandler({ publicDir }),
 });
 
-console.log(`🚀 Server running at http://localhost:${port}`);
+console.log(`server.js: Server running at http://localhost:${port}`);

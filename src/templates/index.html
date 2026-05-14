@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Bun + htmx Starter</title>
@@ -7,20 +8,17 @@
   <link rel="stylesheet" href="/static/app.css">
   <script src="/static/htmx.min.js" defer></script>
 </head>
+
 <body style="font-family: sans-serif; padding: 2rem; max-width: 600px; margin: 0 auto;">
   <main>
     <h1>My Todo List</h1>
 
-    <form hx-post="/todos" 
-          hx-target="#todo-list" 
-          hx-swap="innerHTML" 
-          ononsubmit="this.reset()">
-      <input name="text" 
-             placeholder="What needs to be done?" 
-             style="padding: 0.5rem; width: 70%;"
-             autocomplete="off" 
-             required>
+    <form hx-post="/todos" hx-target="#todo-list" hx-swap="innerHTML" hx-on::after-request="this.reset()">
+
+      <input name="text" placeholder="What needs to be done?" style="padding: 0.5rem; width: 70%;" autocomplete="off"
+        required>
       <button type="submit" style="padding: 0.5rem;">Add Todo</button>
+
     </form>
 
     <ul id="todo-list" style="margin-top: 2rem;">
@@ -28,4 +26,5 @@
     </ul>
   </main>
 </body>
+
 </html>
